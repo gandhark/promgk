@@ -1,0 +1,21 @@
+### Alert.rules ###
+
+# Alert for any instance that is unreachable for >5 minutes.
+ALERT temp2_down
+  IF up{instance="172.27.59.65:9104"} == 0
+  FOR 1m
+  WITH {
+    severity="page"
+  }
+  SUMMARY "Instance {{$labels.instance}} down"
+  DESCRIPTION "{{$labels.instance}} of job {{$labels.job}} has been down for more than 5 minutes."
+
+#Alert for any rancher perconda db container having more than 1GB Ram
+ALERT temp3_down
+  IF up{instance="172.27.59.65:9104"} == 0
+  FOR 1m
+  WITH {
+    severity="high"
+  }
+  SUMMARY "High Memory usage for Ubuntu container"
+  DESCRIPTION "High Memory usage for Ubuntu container on {{$labels.instance}} for container {{$labels.name}} (current value: {{$value}})"
